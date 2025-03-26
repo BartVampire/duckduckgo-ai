@@ -39,7 +39,17 @@ class Settings(BaseModel):
     CORS_HEADERS: list = ["*"]
 
     # Настройки логирования
-    LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
+    # Эмодзи для различных уровней логирования
+    LOG_LEVELS = {
+        "DEBUG": 10,
+        "INFO": 20,
+        "WARNING": 30,
+        "ERROR": 40,
+        "CRITICAL": 50
+    }
+
+    LOG_LEVEL_STR: str = os.getenv("LOG_LEVEL", "INFO")
+    LOG_LEVEL: int = LOG_LEVELS.get(LOG_LEVEL_STR, 20)
 
 
 settings = Settings()
