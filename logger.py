@@ -2,7 +2,7 @@ import logging
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Optional, Union
 
 from config import settings
 
@@ -45,11 +45,12 @@ class CustomFormatter(logging.Formatter):
         return super().format(record)
 
 
-def setup_logger(name: str, log_level: Optional[str] = logging.INFO) -> logging.Logger:
-    """Настройка логгера с русскими сообщениями и эмодзи"""
-
-    # Определяем уровень логирования
-    level = getattr(logging, log_level or settings.LOG_LEVEL, logging.INFO)
+def setup_logger(name: str, log_level: Union[str, int] = "INFO") -> logging.Logger:
+    # Если log_level уже число, используем его напрямую, иначе получаем числовое значение из logging
+    if isinstance(log_level, int):
+        level = log_level
+    else:
+        level = getattr(logging, log_level, settings.LOG_LEVEL)
 
     # Создаем логгер
     logger = logging.getLogger(name)
