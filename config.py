@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import Optional, Dict, Any
 from pydantic import BaseModel
@@ -8,13 +9,12 @@ load_dotenv()
 
 # Настройки логирования
 LOG_LEVELS = {
-    "DEBUG": 10,
-    "INFO": 20,
-    "WARNING": 30,
-    "ERROR": 40,
-    "CRITICAL": 50
+    "DEBUG": logging.DEBUG,
+    "INFO": logging.INFO,
+    "WARNING": logging.WARNING,
+    "ERROR": logging.ERROR,
+    "CRITICAL": logging.CRITICAL
 }
-
 
 class Settings(BaseModel):
     """Настройки приложения"""
@@ -48,8 +48,8 @@ class Settings(BaseModel):
     CORS_HEADERS: list = ["*"]
 
 
-    LOG_LEVEL_STR: str = os.getenv("LOG_LEVEL", "INFO")
-    LOG_LEVEL: int = LOG_LEVELS.get(LOG_LEVEL_STR, 20)
+    LOG_LEVEL_STR: str = os.getenv("LOG_LEVEL", "INFO").upper()
+    LOG_LEVEL = LOG_LEVELS.get(LOG_LEVEL_STR, logging.INFO)
 
 
 settings = Settings()
