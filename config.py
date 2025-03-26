@@ -6,6 +6,15 @@ from dotenv import load_dotenv
 # Загрузка переменных из .env файла
 load_dotenv()
 
+# Настройки логирования
+LOG_LEVELS = {
+    "DEBUG": 10,
+    "INFO": 20,
+    "WARNING": 30,
+    "ERROR": 40,
+    "CRITICAL": 50
+}
+
 
 class Settings(BaseModel):
     """Настройки приложения"""
@@ -38,15 +47,6 @@ class Settings(BaseModel):
     CORS_ORIGINS: list = ["*"]
     CORS_HEADERS: list = ["*"]
 
-    # Настройки логирования
-    # Эмодзи для различных уровней логирования
-    LOG_LEVELS = {
-        "DEBUG": 10,
-        "INFO": 20,
-        "WARNING": 30,
-        "ERROR": 40,
-        "CRITICAL": 50
-    }
 
     LOG_LEVEL_STR: str = os.getenv("LOG_LEVEL", "INFO")
     LOG_LEVEL: int = LOG_LEVELS.get(LOG_LEVEL_STR, 20)
