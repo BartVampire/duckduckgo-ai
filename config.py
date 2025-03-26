@@ -49,7 +49,7 @@ class Settings(BaseModel):
 
 
     LOG_LEVEL_STR: str = os.getenv("LOG_LEVEL", "INFO").upper()
-    LOG_LEVEL = LOG_LEVELS.get(LOG_LEVEL_STR, logging.INFO)
+    LOG_LEVEL: int = LOG_LEVELS.get(LOG_LEVEL_STR, logging.INFO)
 
 
 settings = Settings()
